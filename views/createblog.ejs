@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include('./partials/head') %>
+    <title>Ad blog Page</title>
+</head>
+<body>
+    <%- include('./partials/nav') %>
+    <div class="container mt-3">
+        <form action="/api/blog/adBlog" method="post" enctype="multipart/form-data">
+          <div class="mb-3">
+            <label for="coverImage" >Upload</label>
+            <input class="form-control mt-2" type="file"  name="coverImage"  id="coverImageUrl"></input>
+          </div>
+          <div class="mb-3">
+            <label for="title" >Title</label>
+            <input class="form-control mt-2" type="text" name="title"  id="title"></input>
+          </div>
+          <div class="mb-3">
+            <label for="title" >Body</label>
+            <textarea class="form-control mt-2" type="text"  name="body" placeholder="Leave a title here" id="body"></textarea>
+          </div>
+          <div class="mb-3">
+          <button type="submit" class="btn btn-primary">Submit</button>
+          </div>
+        </form>  
+    </div>
+    
+
+
+    <%- include('./partials/script') %>
+</body>
+</html>

@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <%- include('./partials/head') %>
+
+    <title><%= blog.title %></title>
+</head>
+
+<body>
+
+    <%- include('./partials/nav') %>
+
+    <div class="container my-3">
+
+        <div class="card shadow border-0 rounded-4 overflow-hidden mx-auto"
+            style="max-width: 900px;">
+
+            <!-- Blog Content -->
+            <div class="card-body px-4 px-md-5 pt-4 pb-4">
+
+                <!-- Title -->
+                <h1 class="fs-2 fw-bold text-dark mb-4">
+                    <%= blog.title %>
+                </h1>
+
+                <!-- Image -->
+                <img
+                    src="<%= blog.coverImage %>"
+                    alt="<%= blog.title %>"
+                    class="img-fluid w-100 rounded-3 mb-3"
+                    style="height: 450px; object-fit: cover;"
+                >
+
+                <!-- Body -->
+                <p class="fs-5 text-secondary lh-lg mb-0"
+                    style="white-space: pre-line;">
+                    <%= blog.body %>
+                </p>
+
+            </div>
+
+
+            <!-- Author -->
+            <% if (blog.createdBy) { %>
+
+                <div class="d-flex align-items-center gap-3 px-4 px-md-5 pb-4">
+
+                    <img
+                        src="<%= blog.createdBy.profileImageUrl %>"
+                        alt="profile image"
+                        width="50"
+                        height="50"
+                        class="rounded-circle object-fit-cover"
+                    >
+
+                    <strong class="fs-6">
+                        <%= blog.createdBy.fullName %>
+                    </strong>
+
+                </div>
+
+            <% } %>
+
+
+            <!-- Comments Section -->
+            <div class="border-top px-4 px-md-5 py-4">
+
+                <h5 class="fw-bold mb-4">
+                    Comments (<%= comments.length %>)
+                </h5>
+
+
+                <!-- Add Comment -->
+                <% if (locals.user) { %>
+
+                    <form
+                        action="/api/blog/comment/<%= blog._id %>"
+                        method="POST"
+                        class="mb-4"
+                    >
+
+                        <div class="input-group">
+
+                            <input
+                                type="text"
+                                class="form-control"
+                                name="content"
+                                placeholder="Enter your comment"
+                                required
+                            >
+
+                            <button
+                                class="btn btn-primary"
+                                type="submit"
+                            >
+                                Add
+                            </button>
+
+                        </div>
+
+                    </form>
+
+                <% } %>
+
+
+                <!-- All Comments -->
+                <% if (comments && comments.length > 0) { %>
+
+                    <% comments.forEach(comment => { %>
+
+                        <div class="d-flex gap-3 mb-4">
+
+                            <!-- Comment User Image -->
+                            <img
+                                src="<%= comment.createdBy.profileImageUrl %>"
+                                alt="profile image"
+                                width="45"
+                                height="45"
+                                class="rounded-circle object-fit-cover"
+                            >
+
+                            <!-- Comment Content -->
+                            <div>
+
+                                <strong class="d-block mb-1">
+                                    <%= comment.createdBy.fullName %>
+                                </strong>
+
+                                <p class="mb-0 text-secondary">
+                                    <%= comment.content %>
+                                </p>
+
+                            </div>
+
+                        </div>
+
+                    <% }) %>
+
+                <% } else { %>
+
+                    <p class="text-secondary mb-0">
+                        No comments yet.
+                    </p>
+
+                <% } %>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <%- include('./partials/script') %>
+
+</body>
+
+</html>

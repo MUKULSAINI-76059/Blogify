@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include('./partials/head') %>
+    <title>Home Page</title>
+</head>
+
+<body>
+
+    <%- include('./partials/nav') %>
+
+    <div class="container-fluid mt-4 px-5">
+
+        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4">
+
+            <% (typeof allBlogs !== 'undefined' ? allBlogs : []).forEach(blog => { %>
+
+                <div class="col">
+                    <div class="card h-100 shadow-sm">
+
+                        <img 
+                            src="<%= blog.coverImage %>" 
+                            class="card-img-top"
+                            alt="<%= blog.title %>"
+                            style="height: 220px; object-fit: cover;"
+                        >
+
+                        <div class="card-body d-flex flex-column">
+
+                            <h5 class="card-title">
+                                <%= blog.title %>
+                            </h5>
+
+                            <p class="card-text">
+                                <%= blog.body.length > 120 
+                                 ? blog.body.substring(0, 120).split(' ').slice(0, -1).join(' ') + '... See more'
+                                : blog.body 
+                                 %>
+                            </p>
+
+                            <a 
+                                href="/api/blog/<%= blog._id %>" 
+                                class="btn btn-primary mt-auto"
+                            >
+                                View Blog
+                            </a>
+
+                        </div>
+
+                    </div>
+                </div>
+
+            <% }) %>
+
+        </div>
+
+    </div>
+
+    <%- include('./partials/script') %>
+
+</body>
+</html>
